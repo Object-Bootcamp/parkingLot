@@ -44,6 +44,10 @@ public class ParkingLot {
         return tokenVehicleMap.size() < capacity;
     }
 
+    public int currentAvailability() {
+        return capacity - tokenVehicleMap.size();
+    }
+
     public boolean isFull() {
         return capacity == tokenVehicleMap.size();
     }

@@ -1,6 +1,7 @@
 package com.bootcamp.parkingLot;
 
 import com.bootcamp.parkingLot.exception.CanNotParkException;
+import com.bootcamp.parkingLot.parkingStrategy.EvenlyDistributeStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,13 +49,29 @@ public class ParkingAttendantTest {
         when(parkingLotOne.isSlotAvailable()).thenReturn(true);
         when(parkingLotTwo.isSlotAvailable()).thenReturn(false);
 
-        Object token = new Object();
 
-        when(parkingLotOne.park(carA)).thenReturn(token);
-        when(parkingLotOne.containsToken(token)).thenReturn(true);
-        when(parkingLotOne.unpark(token)).thenReturn(carA);
+        when(parkingLotOne.park(carA)).thenReturn(tokenForCarA);
+        when(parkingLotOne.containsToken(tokenForCarA)).thenReturn(true);
+        when(parkingLotOne.unpark(tokenForCarA)).thenReturn(carA);
 
         Object parkingToken = parkingAttendant.parkMyVehicle(carA);
         assertEquals(carA, parkingAttendant.unparkMyVehicle(parkingToken));
+    }
+
+
+    @Test
+    public void shouldParkVehiclesByEvenlySpaced() throws CanNotParkException {
+        ParkingLot parkingLotThree = mock(ParkingLot.class);
+        ParkingAttendant parkingAttendant = new ParkingAttendant(parkingLotOne, parkingLotTwo, parkingLotThree);
+
+        when(parkingLotOne.currentAvailability()).thenReturn(4);
+        when(parkingLotTwo.currentAvailability()).thenReturn(5);
+        when(parkingLotThree.currentAvailability()).thenReturn(3);
+
+        parkingAttendant.setParkingMethod(new EvenlyDistributeStrategy());
+        parkingAttendant.parkMyVehicle(carA);
+
+//        Car should be parking in parkingLotTwo
+//        assertEquals();
     }
 }

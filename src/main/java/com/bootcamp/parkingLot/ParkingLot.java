@@ -1,6 +1,6 @@
 package com.bootcamp.parkingLot;
 
-import com.bootcamp.parkingLot.exception.CanNotParkException;
+import com.bootcamp.parkingLot.exception.ParkingLotException;
 import com.bootcamp.parkingLot.observer.ParkingLotObserver;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class ParkingLot {
         observers = new ArrayList();
     }
 
-    public Object park(Object car) throws CanNotParkException {
+    public Object park(Object car) throws ParkingLotException {
         if (isSlotAvailable()) {
             Object token = new Object();
             tokenVehicleMap.put(token, car);
@@ -26,18 +26,18 @@ public class ParkingLot {
                 notifyParkingIsFull();
             return token;
         } else {
-            throw CanNotParkException.slotIsFull();
+            throw ParkingLotException.slotIsFull();
         }
     }
 
-    public Object unpark(Object token) throws CanNotParkException {
+    public Object unpark(Object token) throws ParkingLotException {
         if (tokenVehicleMap.containsKey(token)) {
             Object car = tokenVehicleMap.remove(token);
             if (isParkingAvailable())
                 notifyParkingIsAvailable();
             return car;
         } else
-            throw CanNotParkException.invalidToken();
+            throw ParkingLotException.invalidToken();
     }
 
     public boolean isSlotAvailable() {
@@ -76,4 +76,19 @@ public class ParkingLot {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ParkingLot that = (ParkingLot) o;
+
+        return capacity == that.capacity;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return capacity;
+    }
 }

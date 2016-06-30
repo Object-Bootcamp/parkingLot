@@ -1,7 +1,7 @@
 package com.bootcamp.parkingLot;
 
 import com.bootcamp.parkingLot.constants.ParkingLotConstants;
-import com.bootcamp.parkingLot.exception.CanNotParkException;
+import com.bootcamp.parkingLot.exception.ParkingLotException;
 import com.bootcamp.parkingLot.observer.ParkingLotObserver;
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,7 +27,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void shouldBeAbleToParkCarWhenSlotIsAvailable() throws CanNotParkException {
+    public void shouldBeAbleToParkCarWhenSlotIsAvailable() throws ParkingLotException {
         Object token = parkingLotTwo.park(carA);
         assertNotNull(token);
     }
@@ -35,11 +35,11 @@ public class ParkingLotTest {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    @Test(expected = CanNotParkException.class)
-    public void shouldNotBeAbleParkCarWhenSlotIsUnavailable() throws CanNotParkException {
+    @Test(expected = ParkingLotException.class)
+    public void shouldNotBeAbleParkCarWhenSlotIsUnavailable() throws ParkingLotException {
         parkingLotOne.park(carA);
         parkingLotOne.park(carB);
-        expectedEx.expect(CanNotParkException.class);
+        expectedEx.expect(ParkingLotException.class);
         expectedEx.expectMessage(ParkingLotConstants.PARKING_FULL);
     }
 
@@ -51,14 +51,14 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void shouldNotUnparkWithInvalidToken() throws CanNotParkException {
+    public void shouldNotUnparkWithInvalidToken() throws ParkingLotException {
         Object tokenForCarA = parkingLotOne.park(carA);
         Object car = parkingLotOne.unpark(tokenForCarA);
         assertNotNull(car);
     }
 
     @Test
-    public void shouldInformWhenParkingLotIfFull() throws CanNotParkException {
+    public void shouldInformWhenParkingLotIfFull() throws ParkingLotException {
         ParkingLotObserver parkingOwnerMock = mock(ParkingLotObserver.class);
         parkingLotTwo.addObserver(parkingOwnerMock);
         parkingLotTwo.park(carA);
@@ -69,7 +69,7 @@ public class ParkingLotTest {
         verify(parkingOwnerMock, times(1)).parkingLotIsFull();
     }
 
-    @Test(expected = CanNotParkException.class)
+    @Test(expected = ParkingLotException.class)
     public void shouldNotBeAbleToUnparkCarWithInvalidToken() throws Exception {
         Object invalidToken = new Object();
 
@@ -77,7 +77,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void shouldNotifyObserverWhenParkingIsAvailable() throws CanNotParkException {
+    public void shouldNotifyObserverWhenParkingIsAvailable() throws ParkingLotException {
         ParkingOwner parkingOwner = mock(ParkingOwner.class);
         parkingLotOne.addObserver(parkingOwner);
 
@@ -88,7 +88,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void shouldNotifyObserverOnlyOnceWhenParkingIsAvailable() throws CanNotParkException {
+    public void shouldNotifyObserverOnlyOnceWhenParkingIsAvailable() throws ParkingLotException {
         ParkingOwner parkingOwner = mock(ParkingOwner.class);
         parkingLotTwo.addObserver(parkingOwner);
 

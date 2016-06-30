@@ -1,12 +1,11 @@
 package com.bootcamp.parkingLot;
 
-import com.bootcamp.parkingLot.exception.CanNotParkException;
+import com.bootcamp.parkingLot.exception.ParkingLotException;
 import com.bootcamp.parkingLot.parkingStrategy.FCFSParkingStrategy;
 import com.bootcamp.parkingLot.parkingStrategy.ParkingStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ParkingAttendant {
     private final List<ParkingLot> allottedParkingLots;
@@ -20,16 +19,17 @@ public class ParkingAttendant {
         }
     }
 
-    public Object parkMyVehicle(Object vehicle) throws CanNotParkException {
-        return this.parkingStrategy.execute((ArrayList<ParkingLot>) allottedParkingLots, vehicle);
+    public Object parkMyVehicle(Object vehicle) throws ParkingLotException {
+        ParkingLot parkingLotOtPark = this.parkingStrategy.getParkingLot((ArrayList<ParkingLot>) allottedParkingLots);
+        return parkingLotOtPark.park(vehicle);
     }
 
-    public Object unparkMyVehicle(Object parkingToken) throws CanNotParkException {
+    public Object unparkMyVehicle(Object parkingToken) throws ParkingLotException {
         for (ParkingLot parkingLot : allottedParkingLots)
             if (parkingLot.containsToken(parkingToken)) {
                 return parkingLot.unpark(parkingToken);
             }
-        throw CanNotParkException.invalidToken();
+        throw ParkingLotException.invalidToken();
     }
 
     public void setParkingMethod(ParkingStrategy strategy) {

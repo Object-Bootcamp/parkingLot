@@ -1,7 +1,6 @@
 package com.bootcamp.parkingLot;
 
-import com.bootcamp.parkingLot.exception.CanNotParkException;
-import com.bootcamp.parkingLot.parkingStrategy.EvenlyDistributeStrategy;
+import com.bootcamp.parkingLot.exception.ParkingLotException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +24,7 @@ public class ParkingAttendantTest {
     }
 
     @Test
-    public void shouldDirectMeToParkCar() throws CanNotParkException {
+    public void shouldDirectMeToParkCar() throws ParkingLotException {
         ParkingAttendant parkingAttendant = new ParkingAttendant(parkingLotOne, parkingLotTwo);
         when(parkingLotOne.isSlotAvailable()).thenReturn(true);
         when(parkingLotOne.park(carA)).thenReturn(tokenForCarA);
@@ -34,8 +33,8 @@ public class ParkingAttendantTest {
         assertEquals(parkingAttendant.parkMyVehicle(carA), tokenForCarA);
     }
 
-    @Test(expected = CanNotParkException.class)
-    public void shouldNotGetParkingLotIfParkingFull() throws CanNotParkException {
+    @Test(expected = ParkingLotException.class)
+    public void shouldNotGetParkingLotIfParkingFull() throws ParkingLotException {
         ParkingAttendant parkingAttendant = new ParkingAttendant(parkingLotOne, parkingLotTwo);
         when(parkingLotOne.isSlotAvailable()).thenReturn(false);
         when(parkingLotTwo.isSlotAvailable()).thenReturn(false);
@@ -44,7 +43,7 @@ public class ParkingAttendantTest {
     }
 
     @Test
-    public void shouldBeAbleToUnpark() throws CanNotParkException {
+    public void shouldBeAbleToUnpark() throws ParkingLotException {
         ParkingAttendant parkingAttendant = new ParkingAttendant(parkingLotOne, parkingLotTwo);
         when(parkingLotOne.isSlotAvailable()).thenReturn(true);
         when(parkingLotTwo.isSlotAvailable()).thenReturn(false);
@@ -58,20 +57,4 @@ public class ParkingAttendantTest {
         assertEquals(carA, parkingAttendant.unparkMyVehicle(parkingToken));
     }
 
-
-    @Test
-    public void shouldParkVehiclesByEvenlySpaced() throws CanNotParkException {
-        ParkingLot parkingLotThree = mock(ParkingLot.class);
-        ParkingAttendant parkingAttendant = new ParkingAttendant(parkingLotOne, parkingLotTwo, parkingLotThree);
-
-        when(parkingLotOne.currentAvailability()).thenReturn(4);
-        when(parkingLotTwo.currentAvailability()).thenReturn(5);
-        when(parkingLotThree.currentAvailability()).thenReturn(3);
-
-        parkingAttendant.setParkingMethod(new EvenlyDistributeStrategy());
-        parkingAttendant.parkMyVehicle(carA);
-
-//        Car should be parking in parkingLotTwo
-//        assertEquals();
-    }
 }

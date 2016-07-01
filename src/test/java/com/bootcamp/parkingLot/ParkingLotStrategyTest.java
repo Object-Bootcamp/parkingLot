@@ -16,14 +16,12 @@ import static org.mockito.Mockito.when;
 public class ParkingLotStrategyTest {
     private ParkingLot parkingLotOne;
     private ParkingLot parkingLotTwo;
-    private ParkingLot parkingLotThree;
     ArrayList<ParkingLot> parkingLots;
 
     @Before
     public void setUp() {
         parkingLotOne = mock(ParkingLot.class);
         parkingLotTwo = mock(ParkingLot.class);
-        parkingLotThree = mock(ParkingLot.class);
         parkingLots = new ArrayList<>();
         parkingLots.add(parkingLotOne);
         parkingLots.add(parkingLotTwo);

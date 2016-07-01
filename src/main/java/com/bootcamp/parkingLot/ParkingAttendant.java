@@ -11,7 +11,7 @@ public class ParkingAttendant {
     private final List<ParkingLot> allottedParkingLots;
     private ParkingStrategy parkingStrategy;
 
-    public ParkingAttendant(ParkingLot... parkingLots) {
+    public ParkingAttendant(ParkingStrategy parkingStrategy, ParkingLot... parkingLots) {
         this.parkingStrategy = new FCFSParkingStrategy();
         allottedParkingLots = new ArrayList<ParkingLot>();
         for (ParkingLot parkingLot : parkingLots) {

@@ -14,7 +14,6 @@ public class FCFSParkingStrategy implements ParkingStrategy {
                 return parkingLot;
             }
         throw ParkingLotException.slotIsFull();
-
     }
 
 

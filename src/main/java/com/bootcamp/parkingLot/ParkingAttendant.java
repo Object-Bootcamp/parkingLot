@@ -19,12 +19,12 @@ public class ParkingAttendant {
         }
     }
 
-    public Object parkMyVehicle(Object vehicle) throws ParkingLotException {
+    public ParkingToken parkMyVehicle(Object vehicle) throws ParkingLotException {
         ParkingLot parkingLotOtPark = this.parkingStrategy.getParkingLot((ArrayList<ParkingLot>) allottedParkingLots);
         return parkingLotOtPark.park(vehicle);
     }
 
-    public Object unparkMyVehicle(Object parkingToken) throws ParkingLotException {
+    public Object unparkMyVehicle(ParkingToken parkingToken) throws ParkingLotException {
         for (ParkingLot parkingLot : allottedParkingLots)
             if (parkingLot.containsToken(parkingToken)) {
                 return parkingLot.unpark(parkingToken);

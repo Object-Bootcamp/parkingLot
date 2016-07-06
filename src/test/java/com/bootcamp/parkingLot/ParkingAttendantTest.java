@@ -14,7 +14,7 @@ public class ParkingAttendantTest {
     private ParkingLot parkingLotTwo;
     private ParkingLot parkingLotOne;
     private Object carA;
-    private Object tokenForCarA;
+    private ParkingToken tokenForCarA;
     private ParkingStrategy parkingStrategy;
 
     @Before
@@ -23,7 +23,7 @@ public class ParkingAttendantTest {
         parkingLotTwo = mock(ParkingLot.class);
         parkingStrategy = mock(ParkingStrategy.class);
         carA = new Object();
-        tokenForCarA = new Object();
+        tokenForCarA = mock(ParkingToken.class);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ParkingAttendantTest {
         when(parkingLotOne.containsToken(tokenForCarA)).thenReturn(true);
         when(parkingLotOne.unpark(tokenForCarA)).thenReturn(carA);
 
-        Object parkingToken = parkingAttendant.parkMyVehicle(carA);
+        ParkingToken parkingToken = parkingAttendant.parkMyVehicle(carA);
         assertEquals(carA, parkingAttendant.unparkMyVehicle(parkingToken));
     }
 

@@ -32,4 +32,9 @@ public class ParkingAttendant {
     public void setParkingMethod(ParkingStrategy strategy) {
         this.parkingStrategy =  strategy;
     }
+
+    public ArrayList<ParkingSlot> findCarWithColor(String color) {
+        ArrayList <ParkingSlot> parkingSlots = new ArrayList<ParkingSlot>();
+        return parkingSlots;
+    }
 }

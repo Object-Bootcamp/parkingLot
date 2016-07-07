@@ -8,11 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ParkingLot {
+    private final String parkingIdentifier;
     private int capacity;
     private HashMap<ParkingToken, Object> tokenVehicleMap;
     private List<ParkingLotObserver> observers;
 
-    public ParkingLot(int slots) {
+    public ParkingLot(String parkingLotIdentifier, int slots) {
+        this.parkingIdentifier = parkingLotIdentifier;
         this.capacity = slots;
         tokenVehicleMap = new HashMap<ParkingToken, Object>();
         observers = new ArrayList();
@@ -20,7 +22,7 @@ public class ParkingLot {
 
     public ParkingToken park(Object car) throws ParkingLotException {
         if (isSlotAvailable()) {
-            ParkingToken token = new ParkingToken(System.currentTimeMillis());
+            ParkingToken token = new ParkingToken(this.parkingIdentifier, this.currentAvailability(),System.currentTimeMillis());
             tokenVehicleMap.put(token, car);
             if (isFull())
                 notifyParkingIsFull();

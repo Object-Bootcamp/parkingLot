@@ -22,8 +22,8 @@ public class ParkingLotTest {
     public void setup() {
         carA = new Object();
         carB = new Object();
-        parkingLotOne = new ParkingLot(1);
-        parkingLotTwo = new ParkingLot(2);
+        parkingLotOne = new ParkingLot("P1",1);
+        parkingLotTwo = new ParkingLot("P2",2);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ParkingLotTest {
 
     @Test(expected = ParkingLotException.class)
     public void shouldNotBeAbleToUnparkCarWithInvalidToken() throws Exception {
-        ParkingToken invalidToken = new ParkingToken(System.currentTimeMillis());
+        ParkingToken invalidToken = mock(ParkingToken.class);
 
         parkingLotOne.unpark(invalidToken);
     }

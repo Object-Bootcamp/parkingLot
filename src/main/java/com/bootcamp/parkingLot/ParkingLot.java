@@ -6,6 +6,8 @@ import com.bootcamp.parkingLot.observer.ParkingLotObserver;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ParkingLot {
     private final String parkingIdentifier;
@@ -16,7 +18,7 @@ public class ParkingLot {
     public ParkingLot(String parkingLotIdentifier, int slots) {
         this.parkingIdentifier = parkingLotIdentifier;
         this.capacity = slots;
-        tokenVehicleMap = new HashMap<ParkingToken, Car >();
+        tokenVehicleMap = new HashMap<>();
         observers = new ArrayList();
     }
 
@@ -67,16 +69,20 @@ public class ParkingLot {
         return tokenVehicleMap.size() == capacity - 1;
     }
 
+    public ArrayList<ParkingToken> getLocationForCarsWithColor(String color) {
+        ArrayList<ParkingToken> parkingSlots = tokenVehicleMap.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isColor(color))
+                .map(Map.Entry::getKey).collect(Collectors.toCollection(ArrayList::new));
+        return parkingSlots;
+    }
+
     private void notifyParkingIsFull() {
-        for (ParkingLotObserver observer : observers) {
-            observer.parkingLotIsFull();
-        }
+        observers.forEach(ParkingLotObserver::parkingLotIsFull);
     }
 
     private void notifyParkingIsAvailable() {
-        for (ParkingLotObserver observer : observers) {
-            observer.parkingIsAvailable();
-        }
+        observers.forEach(ParkingLotObserver::parkingIsAvailable);
     }
 
     @Override

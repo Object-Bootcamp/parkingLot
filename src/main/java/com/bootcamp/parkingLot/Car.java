@@ -10,4 +10,8 @@ public class Car {
         this.carModel = carModel;
         this.color = color;
     }
+
+    public  boolean isColor(String color){
+        return this.color.equalsIgnoreCase(color);
+    }
 }

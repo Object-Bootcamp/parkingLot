@@ -8,6 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -16,14 +18,15 @@ public class ParkingLotTest {
 
     private Car carA;
     private Car carB;
-    private ParkingLot parkingLotOne, parkingLotTwo;
+    private ParkingLot parkingLotOne, parkingLotTwo, parkingLotThree;
 
     @Before
     public void setup() {
         carA = mock(Car.class);
         carB = mock(Car.class);
-        parkingLotOne = new ParkingLot("P1",1);
-        parkingLotTwo = new ParkingLot("P2",2);
+        parkingLotOne = new ParkingLot("P1", 1);
+        parkingLotTwo = new ParkingLot("P2", 2);
+        parkingLotThree = new ParkingLot("P3", 3);
     }
 
     @Test
@@ -55,6 +58,19 @@ public class ParkingLotTest {
         ParkingToken tokenForCarA = parkingLotOne.park(carA);
         Object car = parkingLotOne.unpark(tokenForCarA);
         assertNotNull(car);
+    }
+
+    @Test
+    public void shouldReturnLocationForSpecificCarColor() throws Exception {
+        Car whiteCarA = new Car("1234", "Ferari", "White");
+        Car whiteCarB = new Car("2345", "Ferari", "White");
+        Car brownCar = new Car("1234", "Ferari", "Brown");
+        parkingLotThree.park(whiteCarA);
+        parkingLotThree.park(brownCar);
+        parkingLotThree.park(whiteCarB);
+
+        ArrayList<ParkingToken> parkingSlots = parkingLotThree.getLocationForCarsWithColor("White");
+        assertEquals(2, parkingSlots.size());
     }
 
     @Test
@@ -99,4 +115,6 @@ public class ParkingLotTest {
 
         verify(parkingOwner, times(1)).parkingIsAvailable();
     }
+
+
 }

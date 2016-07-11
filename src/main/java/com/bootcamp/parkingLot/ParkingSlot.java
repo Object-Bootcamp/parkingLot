@@ -10,4 +10,11 @@ public class ParkingSlot {
         this.slotNumber = slotNumber;
     }
 
+    @Override
+    public String toString() {
+        return "ParkingSlot{" +
+                "parkingLotIdentifier='" + parkingLotIdentifier + '\'' +
+                ", slotNumber=" + slotNumber +
+                '}';
+    }
 }

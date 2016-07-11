@@ -63,22 +63,4 @@ public class ParkingAttendantTest {
         assertEquals(carA, parkingAttendant.unparkMyVehicle(parkingToken));
     }
 
-    @Test
-    public void shouldBeAbleToDetectWhiteCarLocation() throws ParkingLotException {
-        ParkingAttendant parkingAttendant = new ParkingAttendant(parkingStrategy, parkingLot);
-
-        Car whiteCarA = new Car("MH1234","Ferrari","White");
-        Car whiteCarB = new Car("MH1222","Ferrari","White");
-        Car brownCar = new Car("MH1231","Ferrari","Brown");
-        Car blackCar = new Car("MH1230","Ferrari","Black");
-
-        ParkingToken tokenForWhiteCarA = parkingLotOne.park(whiteCarA);
-        ParkingToken tokenForWhiteCarB = parkingLotOne.park(whiteCarB);
-        parkingAttendant.parkMyVehicle(brownCar);
-        parkingAttendant.parkMyVehicle(blackCar);
-
-
-        ArrayList<ParkingSlot> locations =parkingAttendant.findCarWithColor("White");
-    }
-
 }

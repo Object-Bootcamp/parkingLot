@@ -16,7 +16,7 @@ public class ParkingAttendant {
         for (ParkingLot parkingLot : parkingLots) allottedParkingLots.add(parkingLot);
     }
 
-    public ParkingToken parkMyVehicle(Object vehicle) throws ParkingLotException {
+    public ParkingToken parkMyVehicle(Car vehicle) throws ParkingLotException {
         ParkingLot parkingLotOtPark = this.parkingStrategy.getParkingLot((ArrayList<ParkingLot>) allottedParkingLots);
         return parkingLotOtPark.park(vehicle);
     }
@@ -35,6 +35,8 @@ public class ParkingAttendant {
 
     public ArrayList<ParkingSlot> findCarWithColor(String color) {
         ArrayList <ParkingSlot> parkingSlots = new ArrayList<ParkingSlot>();
+//        for(ParkingLot parkingLot : allottedParkingLots)
+
         return parkingSlots;
     }
 }

@@ -14,14 +14,14 @@ import static org.mockito.Mockito.*;
 
 public class ParkingLotTest {
 
-    private Object carA;
-    private Object carB;
+    private Car carA;
+    private Car carB;
     private ParkingLot parkingLotOne, parkingLotTwo;
 
     @Before
     public void setup() {
-        carA = new Object();
-        carB = new Object();
+        carA = mock(Car.class);
+        carB = mock(Car.class);
         parkingLotOne = new ParkingLot("P1",1);
         parkingLotTwo = new ParkingLot("P2",2);
     }

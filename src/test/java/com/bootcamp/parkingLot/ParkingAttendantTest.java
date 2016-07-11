@@ -15,7 +15,7 @@ public class ParkingAttendantTest {
 
     private ParkingLot parkingLotTwo;
     private ParkingLot parkingLotOne;
-    private Object carA;
+    private Car carA;
     private ParkingToken tokenForCarA;
     private ParkingStrategy parkingStrategy;
     private ArrayList<ParkingLot> parkingLot;
@@ -31,7 +31,7 @@ public class ParkingAttendantTest {
 
         when(parkingStrategy.getParkingLot(parkingLot)).thenReturn(parkingLotOne);
 
-        carA = new Object();
+        carA = mock(Car.class);
         tokenForCarA = mock(ParkingToken.class);
     }
 

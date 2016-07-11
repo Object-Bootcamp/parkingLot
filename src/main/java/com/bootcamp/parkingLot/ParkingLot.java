@@ -10,19 +10,20 @@ import java.util.List;
 public class ParkingLot {
     private final String parkingIdentifier;
     private int capacity;
-    private HashMap<ParkingToken, Object> tokenVehicleMap;
+    private HashMap<ParkingToken, Car> tokenVehicleMap;
     private List<ParkingLotObserver> observers;
 
     public ParkingLot(String parkingLotIdentifier, int slots) {
         this.parkingIdentifier = parkingLotIdentifier;
         this.capacity = slots;
-        tokenVehicleMap = new HashMap<ParkingToken, Object>();
+        tokenVehicleMap = new HashMap<ParkingToken, Car >();
         observers = new ArrayList();
     }
 
-    public ParkingToken park(Object car) throws ParkingLotException {
+    public ParkingToken park(Car car) throws ParkingLotException {
         if (isSlotAvailable()) {
-            ParkingToken token = new ParkingToken(this.parkingIdentifier, this.currentAvailability(),System.currentTimeMillis());
+            ParkingSlot parkingSlot = new ParkingSlot(this.parkingIdentifier, this.currentAvailability());
+            ParkingToken token = new ParkingToken(System.currentTimeMillis(), parkingSlot);
             tokenVehicleMap.put(token, car);
             if (isFull())
                 notifyParkingIsFull();
